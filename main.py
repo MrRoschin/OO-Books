@@ -30,3 +30,7 @@ class Magazine(Book):
         super().__init__(title, author, year, pages)
         self.issue = issue
         self.articles = articles
+
+    def getArticleByTitle(self, articletitle):
+        self.articletitle = articletitle
+        return "Magazine methods"
