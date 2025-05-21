@@ -1,36 +1,70 @@
-# Write Python code for both the Novel and Magazine classes modelled in the previous slide. Include a suitable constructor method which uses the Book constructor method. Instantiate 2 novels and 2 magazines and print their details.
-# Create the Book class (plus methods and attributes)
-# Create the Novel class that inherits from Book class.
-# Create the Magazine class that inherits from Book class.
-
 class Book:
-    def __init__(self, title, author, year, pages):
+    def __init__(self, title, author, year, pages, rating=None, review=None):
         self.title = title
         self.author = author
         self.year = year
         self.pages = pages
-
-    def displayDetails(self, rating, review):
-        self.rate = rating
+        self.rating = rating
         self.review = review
-        return "Book methods"
+
+    def displayDetails(self):
+        print(f"Title: {self.title}")
+        print(f"Author: {self.author}")
+        print(f"Year: {self.year}")
+        print(f"Pages: {self.pages}")
+        if self.rating:
+            print(f"Rating: {self.rating}")
+        if self.review:
+            print(f"Review: {self.review}")
+
+    def rateBook(self, rating):
+        self.rating = rating
+        print(f"Rating set to: {rating}/5")
+
+    def reviewBook(self, review):
+        self.review = review
+        print(f"Review set to: {review}")
 
 class Novel(Book):
-    def __init__(self, title, author, year, pages, genre, chapters):
-        super().__init__(title, author, year, pages)
+    def __init__(self, title, author, year, pages, genre, chapters, rating=None, review=None):
+        super().__init__(title, author, year, pages, rating, review)
         self.genre = genre
         self.chapters = chapters
     
-    def calcReadTime(self, readspeed):
-        self.readspeed = readspeed
-        return "Novel methods"
+    def displayDetails(self):
+        super().displayDetails()
+        print(f"Genre: {self.genre}")
+        print(f"Chapters: {self.chapters}")
     
+    def calcReadTime(self, readspeed):
+        return f"Estimated read time: {self.pages / readspeed:.2f} hours"
+
 class Magazine(Book):
-    def __init__(self, title, author, year, pages, issue, articles):
-        super().__init__(title, author, year, pages)
+    def __init__(self, title, author, year, pages, issue, articles, rating=None, review=None):
+        super().__init__(title, author, year, pages, rating, review)
         self.issue = issue
         self.articles = articles
 
+    def displayDetails(self):
+        super().displayDetails()
+        print(f"Issue: {self.issue}")
+        print(f"Articles: {', '.join(self.articles)}")
+
     def getArticleByTitle(self, articletitle):
-        self.articletitle = articletitle
-        return "Magazine methods"
+        if articletitle in self.articles:
+            return f"Article found: {articletitle}"
+        else:
+            return "Article not found"
+
+
+# Instantiate one novel and one magazine (plus one book)
+book1 = Book("IT", "Stephen King", 1986, 1138, "5/5", "Great book")
+novel1 = Novel("1984", "George Orwell", 1949, 328, "Dystopian", 24, "4.5/5", "Cool book")
+magazine1 = Magazine("National Geographic", "Various", 2023, 100, "April", ["Climate Change", "Wildlife Wonders"], "4/5", "National Geographic is cool")
+
+# Display their details
+book1.displayDetails()
+print()
+novel1.displayDetails()
+print()
+magazine1.displayDetails()
